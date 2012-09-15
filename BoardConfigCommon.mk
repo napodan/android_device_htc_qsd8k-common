@@ -30,7 +30,7 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-DEVICE_PACKAGE_OVERLAYS += device/htc/qsd8k-common/overlay
+#DEVICE_PACKAGE_OVERLAYS += device/htc/qsd8k-common/overlay
 
 # Bionic optimizations
 TARGET_USE_LINARO_STRING_ROUTINES := true
