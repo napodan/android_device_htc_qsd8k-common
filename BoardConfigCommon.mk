@@ -36,6 +36,7 @@ TARGET_USE_LINARO_STRING_ROUTINES := true
 # Headers
 TARGET_SPECIFIC_HEADER_PATH := device/htc/qsd8k-common/include
 
+
 # Wifi
 WIFI_BAND                        := 802_11_ABG
 WPA_SUPPLICANT_VERSION           := VER_0_8_X
@@ -90,18 +91,18 @@ BOARD_NO_BFRAMES := true
 
 # Kernel directory
 TARGET_KERNEL_SOURCE := kernel/htc/qsd8k
-BUILD_KERNEL := false
+BUILD_KERNEL := true
 
 ifneq ($(TARGET_PREBUILT_KERNEL),)
-  LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+#  LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
-PRODUCT_COPY_FILES := \
-	$(LOCAL_KERNEL):kernel
+#PRODUCT_COPY_FILES := \
+#	$(LOCAL_KERNEL):kernel
 
 BOARD_USES_LEGACY_CAMERA := true
 
 # Override kernel toolchain. (4.6 is too unstable)
 ifeq ($(LINARO_BUILD),)
-KERNEL_TOOLCHAIN_PREFIX:=$(ANDROID_BUILD_TOP)/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
+#KERNEL_TOOLCHAIN_PREFIX:=$(ANDROID_BUILD_TOP)/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
 endif
