@@ -18,6 +18,8 @@
 # included in a build is to use PRODUCT_PACKAGES in a product
 # definition file).
 
+#DEVICE_PACKAGE_OVERLAYS += device/htc/qsd8k-common/overlay
+
 TARGET_NO_BOOTLOADER := true
 
 # QSD8250
@@ -25,13 +27,14 @@ TARGET_BOARD_PLATFORM := qsd8k
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
 
 # Arm (v7a) w/ neon
+TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-# Bionic optimizations
-TARGET_USE_LINARO_STRING_ROUTINES := true
+# Scorpion
+TARGET_USE_SCORPION_BIONIC_OPTIMIZATION := true
 
 # Headers
 TARGET_SPECIFIC_HEADER_PATH := device/htc/qsd8k-common/include
@@ -48,6 +51,7 @@ WIFI_DRIVER_FW_PATH_STA          := "/vendor/firmware/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_AP           := "/vendor/firmware/fw_bcmdhd_apsta.bin"
 WIFI_DRIVER_FW_PATH_P2P          := "/vendor/firmware/fw_bcmdhd_p2p.bin"
 WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/bcmdhd/parameters/firmware_path"
+BOARD_LEGACY_NL80211_STA_EVENTS := true
 
 # Audio
 BOARD_USES_GENERIC_AUDIO := false
@@ -58,24 +62,27 @@ BOARD_VENDOR_USE_AKMD := akm8973
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
+BOARD_BLUEDROID_VENDOR_CONF := device/htc/qsd8k-common/bluetooth/vnd_qsd8k.txt
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/htc/qsd8k-common/bluetooth/include
 
 # Fm radio
 #BOARD_HAVE_FM_RADIO := true
 #BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
 
 # Qcom
-BOARD_USES_QCOM_HARDWARE := true
+BOARD_USES_LEGACY_QCOM := true
 BOARD_VENDOR_QCOM_AMSS_VERSION := 3200
-COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
 
 # Hardware rendering
 BOARD_EGL_CFG := device/htc/qsd8k-common/egl.cfg
 USE_OPENGL_RENDERER := true
+BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
 # We only have 2 buffers
 TARGET_DISABLE_TRIPLE_BUFFERING := true
 BOARD_NEEDS_MEMORYHEAPPMEM := true
 TARGET_NO_HW_VSYNC := true
 COMMON_GLOBAL_CFLAGS += -DTARGET_8x50
+BOARD_EGL_NEEDS_LEGACY_FB := true
 
 # Webkit
 TARGET_FORCE_CPU_UPLOAD := true
@@ -92,9 +99,7 @@ BOARD_NO_BFRAMES := true
 TARGET_KERNEL_SOURCE := kernel/htc/qsd8k
 BUILD_KERNEL := true
 
-BOARD_USES_LEGACY_CAMERA := true
+#BOARD_USES_LEGACY_CAMERA := true
 
 # Override kernel toolchain. (4.6 is too unstable)
-ifeq ($(LINARO_BUILD),)
-KERNEL_TOOLCHAIN_PREFIX:=$(ANDROID_BUILD_TOP)/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
-endif
+KERNEL_TOOLCHAIN_PREFIX:=$(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.4.3/bin/arm-eabi-
